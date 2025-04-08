@@ -5,7 +5,10 @@ import com.bbva.apx.dto.UsersDTO;
 import java.util.List;
 
 public interface UsersRepository {
-	public List<UsersDTO> getUsers();
+	 List<UsersDTO> getUsers();
 
-	public UsersDTO getUser(Long id);
+	 UsersDTO getUser(Long id);
+
+	Long createUser(UsersDTO user);
+	Boolean removeUser(Long id);
 }

@@ -5,7 +5,11 @@ import com.bbva.apx.dto.UsersDTO;
 import java.util.List;
 
 public interface UsersService {
-	public List<UsersDTO> getUsers();
+	 List<UsersDTO> getUsers();
 
-	public UsersDTO getUser(Long id);
+	 UsersDTO getUser(Long id);
+
+	 String  createUser(UsersDTO user);
+
+	 String removeUser(Long id);
 }

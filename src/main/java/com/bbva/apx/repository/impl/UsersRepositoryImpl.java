@@ -2,7 +2,6 @@ package com.bbva.apx.repository.impl;
 
 import com.bbva.apx.dto.UsersDTO;
 import com.bbva.apx.repository.UsersRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -41,7 +40,9 @@ public class UsersRepositoryImpl implements UsersRepository {
 
 	@Override
 	public UsersDTO getUser(Long id) {
-		final String query = "SELECT ID, NAME FROM USERS WHERE ID= ?;";
+		final String query = "SELECT ID, NAME FROM USERS WHERE ID = ?;";
+
+		System.out.println("llegando: "+id);
 
 		return jdbcTemplate.queryForObject(query, new Object[]{id}, new RowMapper<UsersDTO>(){
 
@@ -50,7 +51,7 @@ public class UsersRepositoryImpl implements UsersRepository {
 			public UsersDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
 
 				UsersDTO dto = new UsersDTO();
-				dto.setId(rs.getInt(rs.getInt("ID")));
+				dto.setId(rs.getInt("ID"));
 				dto.setNombre(rs.getString("NAME"));
 				return dto;
 
@@ -58,6 +59,23 @@ public class UsersRepositoryImpl implements UsersRepository {
 		});
 	}
 
+	@Override
+	public Long createUser(UsersDTO user) {
+		final String query = "INSERT INTO USERS (NAME) values (?);";
+
+		System.out.println("llegando: "+user.getNombre());
+
+
+
+		return (long) jdbcTemplate.update(query,user.getNombre());
+	}
+
+	@Override
+	public Boolean removeUser(Long id) {
+		final String query =  "DELETE FROM USERS WHERE ID = ?;";
+		int flag =  jdbcTemplate.update(query, id);
+		return flag > 0;
+	}
 
 
 }

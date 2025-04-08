@@ -30,4 +30,24 @@ public class UsersServiceImpl implements UsersService {
 	public UsersDTO getUser(Long id) {
 		return usersRepository.getUser(id);
 	}
+
+	@Transactional(readOnly = false)
+	@Override
+	public String createUser(UsersDTO user) {
+
+		long idUserCreated =   usersRepository.createUser(user);
+
+		return "User created ID:" + idUserCreated;
+	}
+
+	@Override
+	public String removeUser(Long id) {
+		String message = "User not deleted. Please check the user ID and try again.";
+
+		if(usersRepository.removeUser(id)){
+			message = "User deleted.";
+		}
+
+		return message ;
+	}
 }
